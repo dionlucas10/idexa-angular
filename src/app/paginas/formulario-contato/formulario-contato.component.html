@@ -1,0 +1,55 @@
+<app-container>
+    <app-cabecalho
+    [bannerSrc]="'/assets/adicionar-contato.png'"
+    [titulo]="'Adicionar contato'">
+    </app-cabecalho>
+
+    <form [formGroup]="contatoForm" (ngSubmit)="salvarContato()">
+        <div role="button" class="imagem-contato">
+            <i class="material-icons">add</i>
+            <label for="avatar">Adicionar a imagem do contato</label>
+            <input type="file" accept="image/*" id="avatar" required (change)="aoSelecionarArquivo($event)">
+        </div>
+        @if(contatoForm.get('avatar')?.value !== ''){
+        <figure>
+            <img [src]="contatoForm.get('avatar')?.value" alt="Avatar do contato">
+        </figure>
+        }
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" formControlName="nome" placeholder="Digite o nome do contato" />
+
+        <app-mensagem-erro [control]="obterControle('nome')"></app-mensagem-erro>
+
+        <label for="telefone">Telefone:</label>
+        <input type="text" id="telefone" formControlName="telefone" placeholder="Digite o telefone do contato" />
+
+        <app-mensagem-erro [control]="obterControle('telefone')"></app-mensagem-erro>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email" placeholder="Digite o email do contato" />
+
+        <app-mensagem-erro [control]="obterControle('email')"></app-mensagem-erro>
+
+        <app-separador></app-separador>
+        <label for="aniversario">Aniversário:</label>
+        <input type="date" id="aniversario" formControlName="aniversario"
+            placeholder="Digite o aniversário do contato" />
+
+        <label for="redes">Redes sociais:</label>
+        <div class="input-container">
+            <span class="span-http">http://</span>
+            <input type="url" id="redes" formControlName="redes" placeholder="Digite a URL da rede social" />
+        </div>
+
+        <textarea type="text" id="obsevacoes" formControlName="obsevacoes"
+            placeholder="Coloque observações nesse espaço. Exemplo: Instrutora da academia 'Nova Imagem', amiga da Júlia."></textarea>
+
+        <section class="botoes">
+            <button (click)="cancelar()" class="botao-cancelar" type="button">Cancelar</button>
+            <button [disabled]="contatoForm.invalid"
+                [ngClass]="contatoForm.valid ? 'botao-salvar' : 'botao-desabilitado'" type="submit">
+                Salvar contato
+            </button>
+        </section>
+    </form>
+</app-container>
